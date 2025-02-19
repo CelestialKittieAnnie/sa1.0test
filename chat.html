@@ -18,22 +18,24 @@
                 <li><a href="chat.html">Chats</a></li>
                 <li><a href="notifications.html">Notifications</a></li>
                 <li><a href="settings.html">Settings</a></li>
-                <li><a href="generator.html">Generator</a></li>
+<li><a href="generator.html">Generator</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section id="chat-list-section">
-            <h2>Chats</h2>
+<section id="chat-list-section">
+        <h2>Chats</h2>
             <ul id="chat-list"></ul>
         </section>
         <section id="chat-section" class="hidden">
             <h2 id="chat-friend-name">Chat</h2>
-            <div id="chat-container"></div>
-            <input type="text" id="chat-input" placeholder="Type a message...">
-            <input type="file" id="chat-media" accept="image/*,video/*">
-            <button id="send-chat">Send</button>
-            <button id="back-to-chats">Back to Chats</button>
+        <div id="chat-container"></div>
+        <input type="text" id="chat-input" placeholder="Type a message...">
+<label for="chat-media">Upload Image:</label>
+<input type="file" id="chat-media" accept="image/*">
+<label for="new-post-media">Upload Media:</label>
+<input type="file" id="new-post-media" accept="image/*,video/*">
+<button id="back-to-chats">Back to Chats</button>
         </section>
     </main>
     <script src="chats.js"></script>

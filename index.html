@@ -10,21 +10,41 @@
     <header>
         <h1>Social-Ai</h1>
         <nav>
-                <a href="index.html">Home</a>
-                <a href="profile.html">Profile</a>
-                <a href="posts.html">Posts</a>
-                <a href="friends.html">Friends</a>
-                <a href="chat.html">Chats</a>
-                <a href="notifications.html">Notifications</a>
-                <a href="settings.html">Settings</a>
-                <a href="generator.html">Generator</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="chat.html">Chats</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="generator.html">Generator</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section id="user-profile-section">
-            <h2>User Profile</h2>
-            <div id="user-profile"></div>
+        <section id="profile-section">
+            <div id="background-picture-container">
+                <img id="background-picture" src="" alt="Background Picture">
+            </div>
+            <div id="profile-picture-container">
+                <img id="profile-picture" src="" alt="Profile Picture">
+            </div>
+            <h2 id="username"></h2>
+            <p id="bio"></p>
+            <p id="details"></p>
+        </section>
+        <section id="reels-section">
+            <h2>Reels</h2>
+            <div id="reels-container"></div>
+        </section>
+        <section id="photo-albums-section">
+            <h2>Photo Albums</h2>
+            <div id="photo-albums-container"></div>
+        </section>
+        <section id="posts-section">
+            <h2>Past Posts</h2>
+            <div id="posts-container"></div>
         </section>
     </main>
     <script src="index.js"></script>

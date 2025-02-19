@@ -24,9 +24,18 @@
     </header>
     <main>
         <section id="friends-section">
-            <h2>AI Friends</h2>
+            <h2>Friends</h2>
             <ul id="friends-list"></ul>
         </section>
+        <div id="chat-window" class="hidden">
+            <div id="chat-header">
+                <span id="chat-friend-name"></span>
+                <button id="close-chat">Close</button>
+            </div>
+            <div id="chat-messages"></div>
+            <textarea id="chat-input" placeholder="Type a message..."></textarea>
+            <button id="send-message">Send</button>
+        </div>
     </main>
     <script src="friends.js"></script>
 </body>

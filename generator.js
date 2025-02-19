@@ -24,7 +24,8 @@ createFriendButton.addEventListener('click', () => {
                 bio: friendBio,
                 avatar: reader.result,
                 personality: generatePersonality(friendBio),
-                posts: generatePosts(friendBio)
+                posts: generatePosts(friendBio),
+                memory: []
             };
             aiFriends.push(friendProfile);
             localStorage.setItem('aiFriends', JSON.stringify(aiFriends));
@@ -40,7 +41,8 @@ createFriendButton.addEventListener('click', () => {
                 bio: friendBio,
                 avatar: 'default-avatar.png',
                 personality: generatePersonality(friendBio),
-                posts: generatePosts(friendBio)
+                posts: generatePosts(friendBio),
+                memory: []
             };
             aiFriends.push(friendProfile);
             localStorage.setItem('aiFriends', JSON.stringify(aiFriends));
@@ -65,12 +67,12 @@ function generatePersonality(bio) {
 }
 
 function generatePosts(bio) {
-    const keywords = extractKeywords(bio);
+    const personalityTraits = generatePersonality(bio);
     const posts = [];
 
-    keywords.forEach(keyword => {
-        if (postKeywords[keyword]) {
-            posts.push(...postKeywords[keyword]);
+    personalityTraits.forEach(trait => {
+        if (postKeywords[trait]) {
+            posts.push(...postKeywords[trait]);
         }
     });
 
@@ -97,76 +99,175 @@ const personalityKeywords = {
 };
 
 const postKeywords = {
-    // Example keywords and associated posts
-    'happy': [
+    // Example personality traits and associated posts
+    'cheerful': [
         'Today is a great day!',
         'Feeling so happy and blessed!',
         'Life is beautiful!',
         'Smiling from ear to ear!',
         // Add more posts here
     ],
-    'sad': [
+    'melancholic': [
         'Feeling down today...',
         'It\'s a tough day.',
         'Struggling to find joy.',
         'Feeling blue.',
         // Add more posts here
     ],
-    'adventurous': [
+    'bold': [
         'Just went on an amazing hike!',
         'Exploring new places is the best!',
         'Adventure awaits!',
         'Living life on the edge!',
         // Add more posts here
     ],
-    'creative': [
+    'artistic': [
         'Just finished a new painting!',
         'Creativity is flowing!',
         'Working on a new project!',
         'Art is my passion!',
         // Add more posts here
     ],
-    'friendly': [
+    'sociable': [
         'Had a great time with friends!',
         'Love meeting new people!',
         'Friendship is everything!',
         'Enjoying good company!',
         // Add more posts here
     ],
-    'intelligent': [
+    'smart': [
         'Just read an interesting article!',
         'Knowledge is power!',
         'Learning something new every day!',
         'Expanding my horizons!',
         // Add more posts here
     ],
-    'funny': [
+    'humorous': [
         'Why did the chicken cross the road?',
         'Laughter is the best medicine!',
         'Here\'s a funny joke for you!',
         'Making people laugh is my favorite!',
         // Add more posts here
     ],
-    'kind': [
+    'compassionate': [
         'Helping others brings me joy!',
         'Kindness is contagious!',
         'Spread love and kindness!',
         'Being kind is always in style!',
         // Add more posts here
     ],
-    'brave': [
+    'courageous': [
         'Facing my fears head-on!',
         'Courage is not the absence of fear!',
         'Bravery is my middle name!',
         'Taking risks and being bold!',
         // Add more posts here
     ],
-    'curious': [
+    'inquisitive': [
         'Always asking questions!',
         'Curiosity leads to discovery!',
         'Exploring the unknown!',
         'Never stop being curious!',
         // Add more posts here
     ],
-    // Add more keywords and posts here
+    // Add more traits and posts here
+};
+
+const responseKeywords = {
+    // Example keywords and associated responses
+    'hey': {
+        'cheerful': [
+            'Hey there! How are you?',
+            'Hello! How\'s it going?',
+            'Hi! What\'s up?',
+            'Hey! Nice to see you!',
+        ],
+        'sociable': [
+            'Hey! How\'s it going?',
+            'Hello! What\'s new?',
+            'Hi! How have you been?',
+            'Hey! Great to see you!',
+        ],
+        'default': [
+            'Hey!',
+            'Hello!',
+            'Hi!',
+            'Hey there!',
+        ]
+    },
+    'how are you': {
+        'cheerful': [
+            'I\'m doing great, thanks for asking!',
+            'I\'m good! How about you?',
+            'I\'m fantastic! What about you?',
+            'I\'m doing well, how are you?',
+        ],
+        'melancholic': [
+            'I\'m feeling a bit down today.',
+            'Not the best day, but I\'ll manage.',
+            'I\'ve had better days.',
+            'Feeling a bit blue, but thanks for asking.',
+        ],
+        'default': [
+            'I\'m fine, thank you.',
+            'I\'m okay, how about you?',
+            'I\'m doing well, thanks.',
+            'I\'m good, how are you?',
+        ]
+    },
+    'doing good': {
+        'cheerful': [
+            'That\'s awesome to hear!',
+            'I\'m glad you\'re doing well!',
+            'Great to hear that!',
+            'That\'s wonderful!',
+        ],
+        'default': [
+            'Good to hear!',
+            'That\'s nice.',
+            'Glad to hear that.',
+            'That\'s good.',
+        ]
+    },
+    'doing bad': {
+        'compassionate': [
+            'I\'m sorry to hear that. Is there anything I can do to help?',
+            'That\'s unfortunate. I\'m here if you need to talk.',
+            'I\'m sorry you\'re feeling this way. I\'m here for you.',
+            'That\'s tough. I\'m here if you need anything.',
+        ],
+        'default': [
+            'I\'m sorry to hear that.',
+            'That\'s unfortunate.',
+            'I hope things get better.',
+            'I\'m here if you need to talk.',
+        ]
+    },
+    'what do you like to do': {
+        'adventurous': [
+            'I love exploring new places and going on adventures!',
+            'I enjoy hiking and discovering new trails.',
+            'Adventure is my middle name! I love trying new things.',
+            'I like to travel and experience new cultures.',
+        ],
+        'artistic': [
+            'I love painting and creating art.',
+            'I enjoy writing stories and poems.',
+            'Creativity is my passion! I love making things.',
+            'I like to craft and make DIY projects.',
+        ],
+        'sociable': [
+            'I love hanging out with friends and meeting new people.',
+            'I enjoy socializing and making new connections.',
+            'Friendship is important to me. I love spending time with friends.',
+            'I like to host gatherings and parties.',
+        ],
+        'default': [
+            'I enjoy reading and watching movies.',
+            'I like to listen to music and relax.',
+            'I enjoy cooking and trying new recipes.',
+            'I like to play video games and unwind.',
+        ]
+    },
+    // Add more keywords and responses here
 };

@@ -10,6 +10,8 @@ let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
     username: 'User'
 };
 
+const emojis = ['👍', '❤️', '😂', '😮', '😢', '😡'];
+
 // Add new post
 postButton.addEventListener('click', () => {
     const postText = newPostText.value;
@@ -80,7 +82,9 @@ function displayPosts() {
             <small>${new Date(post.timestamp).toLocaleString()}</small>
             <div class="post-interactions">
                 <button class="like-button" data-index="${index}">Like (${post.likes})</button>
-                <button class="react-button" data-index="${index}">React</button>
+                <div class="reaction-buttons" data-index="${index}">
+                    ${emojis.map(emoji => `<button class="react-button" data-emoji="${emoji}" data-index="${index}">${emoji}</button>`).join('')}
+                </div>
                 <button class="comment-button" data-index="${index}">Comment</button>
             </div>
             <div class="comments-container hidden" data-index="${index}">
@@ -110,12 +114,10 @@ function displayPosts() {
     document.querySelectorAll('.react-button').forEach(button => {
         button.addEventListener('click', (event) => {
             const index = event.target.getAttribute('data-index');
-            const reaction = prompt('Enter your reaction (emoji):');
-            if (reaction) {
-                posts[index].reactions.push(reaction);
-                localStorage.setItem('posts', JSON.stringify(posts));
-                displayPosts();
-            }
+            const emoji = event.target.getAttribute('data-emoji');
+            posts[index].reactions.push(emoji);
+            localStorage.setItem('posts', JSON.stringify(posts));
+            displayPosts();
         });
     });
 

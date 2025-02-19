@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Social-Ai</title>
+    <title>Edit Profile - Social-Ai</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,22 +23,21 @@
         </nav>
     </header>
     <main>
-        <section id="profile-section">
-            <h2>Profile</h2>
-            <img id="user-avatar" src="default-avatar.png" alt="User Avatar">
-            <label for="avatar-upload">Upload Avatar:</label>
-            <input type="file" id="avatar-upload" accept="image/*">
-            <input type="text" id="username-input" placeholder="Enter your username">
-            <textarea id="bio-input" placeholder="Enter your bio"></textarea>
-            <button id="save-profile">Save Profile</button>
-            <h3>Background Picture</h3>
-            <input type="file" id="background-upload" accept="image/*">
-            <h3>Reels</h3>
-            <div id="reels-container"></div>
-            <h3>Photo Albums</h3>
-            <div id="photo-albums-container"></div>
-            <h3>Posts</h3>
-            <div id="user-posts-container"></div>
+        <section id="edit-profile-section">
+            <h2>Edit Profile</h2>
+            <form id="edit-profile-form">
+                <label for="profile-picture">Profile Picture:</label>
+                <input type="file" id="profile-picture" accept="image/*">
+                <label for="background-picture">Background Picture:</label>
+                <input type="file" id="background-picture" accept="image/*">
+                <label for="username">Username:</label>
+                <input type="text" id="username">
+                <label for="bio">Bio:</label>
+                <textarea id="bio"></textarea>
+                <label for="details">Details:</label>
+                <textarea id="details"></textarea>
+                <button type="button" id="save-profile">Save</button>
+            </form>
         </section>
     </main>
     <script src="profile.js"></script>

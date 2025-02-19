@@ -1,7 +1,8 @@
-const userAvatar = document.getElementById('user-avatar');
-const avatarUpload = document.getElementById('avatar-upload');
-const usernameInput = document.getElementById('username-input');
-const bioInput = document.getElementById('bio-input');
+const profilePictureInput = document.getElementById('profile-picture');
+const backgroundPictureInput = document.getElementById('background-picture');
+const usernameInput = document.getElementById('username');
+const bioInput = document.getElementById('bio');
+const detailsInput = document.getElementById('details');
 const saveProfileButton = document.getElementById('save-profile');
 const backgroundUpload = document.getElementById('background-upload');
 const reelsContainer = document.getElementById('reels-container');
@@ -9,10 +10,11 @@ const photoAlbumsContainer = document.getElementById('photo-albums-container');
 const userPostsContainer = document.getElementById('user-posts-container');
 
 let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
-    avatar: 'default-avatar.png',
+    profilePicture: 'default-avatar.png',
+    backgroundPicture: 'default-background.png',
     username: 'User',
     bio: '',
-    background: 'default-background.png',
+    details: '',
     reels: [],
     photoAlbums: [],
     posts: []
@@ -20,43 +22,41 @@ let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
 
 // Load profile from local storage
 function loadProfile() {
-    userAvatar.src = userProfile.avatar;
+    profilePictureInput.value = '';
+    backgroundPictureInput.value = '';
     usernameInput.value = userProfile.username;
     bioInput.value = userProfile.bio;
-    document.body.style.backgroundImage = `url(${userProfile.background})`;
+    detailsInput.value = userProfile.details;
+    document.body.style.backgroundImage = `url(${userProfile.backgroundPicture})`;
     displayReels();
     displayPhotoAlbums();
     displayPosts();
 }
 
 // Save profile to local storage
-saveProfileButton.addEventListener('click', () => {
-    userProfile.username = usernameInput.value || 'User';
-    userProfile.bio = bioInput.value;
-    localStorage.setItem('userProfile', JSON.stringify(userProfile));
-    alert('Profile saved!');
-    loadProfile();
-});
-
-// Upload avatar
-avatarUpload.addEventListener('change', (event) => {
+function saveProfile() {
     const reader = new FileReader();
     reader.onload = () => {
-        userProfile.avatar = reader.result;
-        userAvatar.src = reader.result;
+        userProfile.profilePicture = profilePictureInput.files[0] ? reader.result : userProfile.profilePicture;
+        userProfile.backgroundPicture = backgroundPictureInput.files[0] ? reader.result : userProfile.backgroundPicture;
+        userProfile.username = usernameInput.value;
+        userProfile.bio = bioInput.value;
+        userProfile.details = detailsInput.value;
+        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        alert('Profile saved!');
+        loadProfile();
     };
-    reader.readAsDataURL(event.target.files[0]);
-});
+    if (profilePictureInput.files[0]) {
+        reader.readAsDataURL(profilePictureInput.files[0]);
+    } else if (backgroundPictureInput.files[0]) {
+        reader.readAsDataURL(backgroundPictureInput.files[0]);
+    } else {
+        reader.onload();
+    }
+}
 
-// Upload background picture
-backgroundUpload.addEventListener('change', (event) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-        userProfile.background = reader.result;
-        document.body.style.backgroundImage = `url(${reader.result})`;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-});
+saveProfileButton.addEventListener('click', saveProfile);
+window.addEventListener('load', loadProfile);
 
 // Display reels
 function displayReels() {

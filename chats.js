@@ -1,156 +1,108 @@
-const chatListSection = document.getElementById('chat-list-section');
-const chatSection = document.getElementById('chat-section');
 const chatList = document.getElementById('chat-list');
+const chatSection = document.getElementById('chat-section');
+const chatFriendName = document.getElementById('chat-friend-name');
 const chatContainer = document.getElementById('chat-container');
 const chatInput = document.getElementById('chat-input');
-const chatMedia = document.getElementById('chat-media');
-const sendChatButton = document.getElementById('send-chat');
+const chatMediaInput = document.getElementById('chat-media');
+const newPostMediaInput = document.getElementById('new-post-media');
 const backToChatsButton = document.getElementById('back-to-chats');
-const chatFriendName = document.getElementById('chat-friend-name');
 
-let chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || {};
-let currentFriend = null;
-let userProfile = JSON.parse(localStorage.getItem('userProfile')) || {
-    avatar: 'default-avatar.png',
-    username: 'User',
-    bio: '',
-    background: 'default-background.png',
-    reels: [],
-    photoAlbums: [],
-    posts: []
-};
+let aiFriends = JSON.parse(localStorage.getItem('aiFriends')) || [];
+let currentChatFriend = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    let aiFriends = JSON.parse(localStorage.getItem('aiFriends')) || [];
-
-    aiFriends.forEach(friend => {
-        const li = document.createElement('li');
-        li.innerHTML = `<img src="${friend.profile.avatar}" alt="${friend.name}" class="friend-avatar"> <button class="chat-friend-button" data-name="${friend.name}">${friend.name}</button>`;
-        chatList.appendChild(li);
+function displayChatList() {
+    chatList.innerHTML = '';
+    aiFriends.forEach((friend, index) => {
+        const chatItem = document.createElement('li');
+        chatItem.innerHTML = `
+            <a href="#" class="chat-friend" data-index="${index}">
+                <img src="${friend.avatar}" alt="${friend.name}" class="friend-avatar">
+                <span>${friend.name}</span>
+            </a>
+        `;
+        chatList.appendChild(chatItem);
     });
 
-    document.querySelectorAll('.chat-friend-button').forEach(button => {
-        button.addEventListener('click', (event) => {
-            currentFriend = event.target.getAttribute('data-name');
-            chatFriendName.textContent = currentFriend;
-            chatListSection.classList.add('hidden');
-            chatSection.classList.remove('hidden');
-            displayChat();
+    document.querySelectorAll('.chat-friend').forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const index = event.target.closest('.chat-friend').getAttribute('data-index');
+            openChatWindow(index);
         });
     });
-});
+}
 
-sendChatButton.addEventListener('click', () => {
-    const message = chatInput.value;
-    const mediaFile = chatMedia.files[0];
-    if (message || mediaFile) {
-        if (!chatHistory[currentFriend]) {
-            chatHistory[currentFriend] = [];
-        }
-        const reader = new FileReader();
-        reader.onload = () => {
-            const chatMessage = {
-                sender: userProfile.username,
-                message: message,
-                media: mediaFile ? reader.result : null,
-                mediaType: mediaFile ? mediaFile.type : null,
-                timestamp: new Date()
-            };
-            chatHistory[currentFriend].push(chatMessage);
-            chatInput.value = '';
-            chatMedia.value = '';
-            displayChat();
-            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-            // Simulate AI response
-            setTimeout(() => {
-                const aiResponse = generateAIResponse(message);
-                chatHistory[currentFriend].push({ sender: currentFriend, message: aiResponse, timestamp: new Date() });
-                displayChat();
-                localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-                addNotification(`${currentFriend} sent you a message: ${aiResponse}`);
-            }, 1000);
-        };
-        if (mediaFile) {
-            reader.readAsDataURL(mediaFile);
-        } else {
-            reader.onload();
-        }
+function openChatWindow(index) {
+    currentChatFriend = aiFriends[index];
+    chatFriendName.textContent = currentChatFriend.name;
+    chatContainer.innerHTML = '';
+    currentChatFriend.memory.forEach(message => {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message');
+        messageDiv.innerHTML = `<strong>${message.author}:</strong> ${message.text}`;
+        chatContainer.appendChild(messageDiv);
+    });
+    chatSection.classList.remove('hidden');
+}
+
+function generateAIResponse(userMessage) {
+    const keywords = extractKeywords(userMessage);
+    const personalityTraits = currentChatFriend.personality;
+    let response = '';
+
+    keywords.forEach(keyword => {
+        personalityTraits.forEach(trait => {
+            if (responseKeywords[keyword] && responseKeywords[keyword][trait]) {
+                response += responseKeywords[keyword][trait][Math.floor(Math.random() * responseKeywords[keyword][trait].length)] + ' ';
+            }
+        });
+    });
+
+    if (!response) {
+        response = 'I am not sure how to respond to that.';
+    }
+
+    return response;
+}
+
+function extractKeywords(text) {
+    return text.toLowerCase().split(/\W+/).filter(word => word.length > 3);
+}
+
+chatInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        sendMessage();
     }
 });
+
+function sendMessage() {
+    const messageText = chatInput.value;
+    if (messageText && currentChatFriend) {
+        const userMessage = {
+            author: 'You',
+            text: messageText,
+            timestamp: new Date()
+        };
+        currentChatFriend.memory.push(userMessage);
+        localStorage.setItem('aiFriends', JSON.stringify(aiFriends));
+        chatInput.value = '';
+        openChatWindow(aiFriends.indexOf(currentChatFriend));
+
+        // Generate AI response
+        const aiResponseText = generateAIResponse(messageText);
+        const aiResponse = {
+            author: currentChatFriend.name,
+            text: aiResponseText,
+            timestamp: new Date()
+        };
+        currentChatFriend.memory.push(aiResponse);
+        localStorage.setItem('aiFriends', JSON.stringify(aiFriends));
+        openChatWindow(aiFriends.indexOf(currentChatFriend));
+    }
+}
 
 backToChatsButton.addEventListener('click', () => {
-    chatListSection.classList.remove('hidden');
     chatSection.classList.add('hidden');
-    currentFriend = null;
 });
 
-function displayChat() {
-    chatContainer.innerHTML = '';
-    if (chatHistory[currentFriend]) {
-        chatHistory[currentFriend].forEach(chat => {
-            const chatDiv = document.createElement('div');
-            chatDiv.classList.add('chat-message');
-            chatDiv.innerHTML = `<strong>${chat.sender}:</strong> ${chat.message} <small>${new Date(chat.timestamp).toLocaleString()}</small>`;
-            if (chat.media) {
-                if (chat.mediaType.startsWith('image/')) {
-                    chatDiv.innerHTML += `<img src="${chat.media}" alt="Chat media" class="chat-media">`;
-                } else if (chat.mediaType.startsWith('video/')) {
-                    chatDiv.innerHTML += `<video controls class="chat-media"><source src="${chat.media}" type="${chat.mediaType}"></video>`;
-                }
-            }
-            chatContainer.appendChild(chatDiv);
-        });
-    }
-}
-
-function generateAIResponse(message) {
-    const keywords = extractKeywords(message);
-    if (keywords.includes('joke')) {
-        return getRandomJoke();
-    }
-    return `You mentioned ${keywords.join(', ')}. That's interesting! Tell me more.`;
-}
-
-function extractKeywords(message) {
-    const words = message.split(' ');
-    return words.filter(word => word.length > 3);
-}
-
-function getRandomJoke() {
-    const jokes = [
-        "Why don't scientists trust atoms? Because they make up everything!",
-        "What do you get when you cross a snowman and a vampire? Frostbite!",
-        "Why did the scarecrow win an award? Because he was outstanding in his field!",
-        "Why don't skeletons fight each other? They don't have the guts.",
-        "What do you call fake spaghetti? An impasta!",
-        "Why did the math book look sad? Because it had too many problems.",
-        "Why was the math book unhappy? It had too many problems.",
-        "Why don't programmers like nature? It has too many bugs.",
-        "How do you organize a space party? You planet.",
-        "What do you call cheese that isn't yours? Nacho cheese."
-    ];
-    return jokes[Math.floor(Math.random() * jokes.length)];
-}
-
-function addNotification(message) {
-    if (Notification.permission === 'granted') {
-        new Notification('Social-Ai Notification', {
-            body: message,
-            icon: 'icon.png'
-        });
-    }
-}
-
-if (Notification.permission !== 'granted') {
-    Notification.requestPermission();
-}
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-        .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch(error => {
-            console.error('Service Worker registration failed:', error);
-        });
-}
+displayChatList();
