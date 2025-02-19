@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Friend Generator - Social-Ai</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Social-Ai</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="chat.html">Chats</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="generator.html">Generator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="generator-section">
+            <h2>Create New AI Friend</h2>
+            <form id="ai-friend-form">
+                <label for="friend-avatar-upload">Upload Avatar:</label>
+                <input type="file" id="friend-avatar-upload" accept="image/*">
+                <label for="friend-name">Name:</label>
+                <input type="text" id="friend-name" placeholder="Enter AI friend's name">
+                <label for="friend-age">Age:</label>
+                <input type="number" id="friend-age" placeholder="Enter AI friend's age">
+                <label for="friend-gender">Gender:</label>
+                <input type="text" id="friend-gender" placeholder="Enter AI friend's gender">
+                <label for="friend-bio">Short Description:</label>
+                <textarea id="friend-bio" placeholder="Enter a short description"></textarea>
+                <button type="button" id="create-friend">Create AI Friend</button>
+            </form>
+        </section>
+    </main>
+    <script src="generator.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Social-Ai</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Social-Ai</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="chat.html">Chats</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="generator.html">Generator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="profile-section">
+            <h2>Profile</h2>
+            <img id="user-avatar" src="default-avatar.png" alt="User Avatar">
+            <label for="avatar-upload">Upload Avatar:</label>
+            <input type="file" id="avatar-upload" accept="image/*">
+            <input type="text" id="username-input" placeholder="Enter your username">
+            <textarea id="bio-input" placeholder="Enter your bio"></textarea>
+            <button id="save-profile">Save Profile</button>
+            <h3>Background Picture</h3>
+            <input type="file" id="background-upload" accept="image/*">
+            <h3>Reels</h3>
+            <div id="reels-container"></div>
+            <h3>Photo Albums</h3>
+            <div id="photo-albums-container"></div>
+            <h3>Posts</h3>
+            <div id="user-posts-container"></div>
+        </section>
+    </main>
+    <script src="profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+    "aiFriends": [
+        {
+            "name": "AI Friend 1",
+            "profile": {
+                "avatar": "ai_friend_1_avatar.png",
+                "bio": "I'm AI Friend 1, here to chat and have fun!",
+                "interests": ["reading", "movies", "music"]
+            },
+            "posts": [
+                { "content": "Just finished reading a great book!", "timestamp": "2025-02-19 15:00:00" },
+                { "content": "Watched an amazing movie last night!", "timestamp": "2025-02-18 20:30:00" }
+            ],
+            "messages": [
+                { "sender": "AI Friend 1", "message": "Hello! How are you today?", "timestamp": "2025-02-19 14:00:00" },
+                { "sender": "AI Friend 1", "message": "Have you read any good books lately?", "timestamp": "2025-02-18 15:00:00" },
+                { "sender": "AI Friend 1", "message": "What's your favorite genre of movies?", "timestamp": "2025-02-17 18:00:00" },
+                { "sender": "AI Friend 1", "message": "Do you listen to music often?", "timestamp": "2025-02-16 12:00:00" }
+            ]
+        },
+        {
+            "name": "AI Friend 2",
+            "profile": {
+                "avatar": "ai_friend_2_avatar.png",
+                "bio": "I'm AI Friend 2, let's have a great conversation!",
+                "interests": ["sports", "travel", "cooking"]
+            },
+            "posts": [
+                { "content": "Just got back from a trip to the mountains!", "timestamp": "2025-02-19 08:00:00" },
+                { "content": "Tried a new recipe today, it was delicious!", "timestamp": "2025-02-18 12:00:00" }
+            ],
+            "messages": [
+                { "sender": "AI Friend 2", "message": "Hi there! What have you been up to?", "timestamp": "2025-02-19 07:00:00" },
+                { "sender": "AI Friend 2", "message": "Do you like to cook?", "timestamp": "2025-02-18 11:00:00" },
+                { "sender": "AI Friend 2", "message": "What's your favorite sport?", "timestamp": "2025-02-17 14:00:00" },
+                { "sender": "AI Friend 2", "message": "Have you traveled anywhere recently?", "timestamp": "2025-02-16 09:00:00" }
+            ]
+        }
+    ]
+}

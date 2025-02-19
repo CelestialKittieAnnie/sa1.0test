@@ -1,0 +1,205 @@
+:root {
+    --primary-color: #eccce4;
+    --secondary-color: #f1e4a8;
+    --tertiary-color: rgb(170, 240, 182);
+    --quaternary-color: #cff1e4;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-color);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+header {
+    background-color: var(--secondary-color);
+    color: var(--tertiary-color);
+    text-align: center;
+    padding: 1rem 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+section {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    background-color: var(--quaternary-color);
+    color: var(--tertiary-color);
+    border: none;
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #77ebab;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+#chat-container {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.chat-message {
+    margin-bottom: 1rem;
+}
+
+.chat-message strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.post {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post-media, .chat-media {
+    max-width: 100%;
+    margin-top: 1rem;
+    border-radius: 5px;
+}
+
+.post-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px; /* Changed to square */
+    margin-right: 10px;
+    object-fit: cover; /* Ensure the image fits within the square */
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.post-interactions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.comments-container {
+    margin-top: 1rem;
+}
+
+.comments-list {
+    margin-top: 1rem;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.comment-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px; /* Changed to square */
+    margin-right: 10px;
+    object-fit: cover; /* Ensure the image fits within the square */
+}
+
+#user-avatar {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #eee;
+    border-radius: 3px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.friend-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.photo-album {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 1rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    button {
+        padding: 0.5rem;
+    }
+
+    input[type="text"],
+    textarea {
+        padding: 0.5rem;
+    }
+}

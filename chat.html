@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Friend Chat Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Social-Ai</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="posts.html">Posts</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="chat.html">Chats</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="generator.html">Generator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="chat-list-section">
+            <h2>Chats</h2>
+            <ul id="chat-list"></ul>
+        </section>
+        <section id="chat-section" class="hidden">
+            <h2 id="chat-friend-name">Chat</h2>
+            <div id="chat-container"></div>
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <input type="file" id="chat-media" accept="image/*,video/*">
+            <button id="send-chat">Send</button>
+            <button id="back-to-chats">Back to Chats</button>
+        </section>
+    </main>
+    <script src="chats.js"></script>
+</body>
+</html>

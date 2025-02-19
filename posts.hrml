@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts - Social-Ai</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Social-Ai</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="chat.html">Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="posts-section">
+            <h2>Posts</h2>
+            <textarea id="new-post-text" placeholder="What's on your mind?"></textarea>
+            <button id="post-button">Post</button>
+            <div id="posts-container"></div>
+        </section>
+    </main>
+    <script src="posts.js"></script>
+</body>
+</html>
